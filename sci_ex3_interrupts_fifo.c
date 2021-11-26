@@ -197,8 +197,8 @@ void main(void)
     //
     msg = "\r\n\n\nHello World!\0";
     SCI_writeCharArray(SCIA_BASE, (uint16_t*)msg, 17);
-    msg = "\r\nYou will enter a character, and the DSP will echo it back!\n\0";
-    SCI_writeCharArray(SCIA_BASE, (uint16_t*)msg, 62);
+    msg = "\r\nYou will enter a command, and the DSP will echo it back!\n\0";
+    SCI_writeCharArray(SCIA_BASE, (uint16_t*)msg, 60);
 
     //
     // Clear the SCI interrupts before enabling them.
@@ -228,7 +228,7 @@ void main(void)
 
 //
 // SCIATxISR - Disable the TXFF interrupt and print message asking
-//             for two characters.
+//             for formatted command.
 //
 __interrupt void
 SCIATxISR(void)
@@ -238,15 +238,17 @@ SCIATxISR(void)
     //
     SCI_disableInterrupt(SCIA_BASE, SCI_INT_TXFF);
 
-    msg = "\r\nEnter two characters: \0";
-    SCI_writeCharArray(SCIA_BASE, (uint16_t*)msg, 26);
+    msg = "\r\nEnter New Commands: \0";
+    SCI_writeCharArray(SCIA_BASE, (uint16_t*)msg, 24);
 
     //
     // Acknowledge the PIE interrupt.
     //
     Interrupt_clearACKGroup(INTERRUPT_ACK_GROUP9);
 }
-/*
+
+//An easy method to obtain a frame.
+#if(0)
 __interrupt void
 SCIARxISR(void)
 {
@@ -255,17 +257,10 @@ SCIARxISR(void)
     //
     SCI_enableInterrupt(SCIA_BASE, SCI_INT_TXFF);
 
-//    while(SCI_readCharBlockingFIFO(SCIA_BASE)!='\0')
-//    {
-//        scia_recev[scia_rx_count] = SCI_readCharBlockingFIFO(SCIA_BASE);
-//        scia_rx_count++;
-//    }
-//    scia_recev[scia_rx_count] = '\0';
-    SCI_readCharArray(SCIA_BASE, scia_recev,SCIA_BUFFER_SIZE);
+    //Frame Receive Test code
+    SCI_readCharArray(SCIA_BASE,sci_rcv_buffer,sci_rx_lenth);
 
-    scia_rx_lenth = sizeof(scia_recev)/sizeof(scia_recev[0]);
-    SCI_writeCharArray(SCIA_BASE, scia_recev, scia_rx_lenth);
-    //SCI_writeCharBlockingFIFO(SCIA_BASE,scia_recev[scia_tx_count]);
+    SCI_writeCharArray(SCIA_BASE, sci_rcv_buffer, sci_rx_lenth);
 
     //
     // Clear the SCI RXFF interrupt and acknowledge the PIE interrupt.
@@ -275,7 +270,8 @@ SCIARxISR(void)
 
     counter++;
 }
-*/
+#endif
+
 //
 // SCIARxISR - Read two characters from the RXBUF and echo them back.
 //
@@ -295,7 +291,17 @@ SCIARxISR(void)
     //
     receivedChar = SCI_readCharBlockingFIFO(SCIA_BASE);
 
-    SCI_readstring(receivedChar);
+    //
+    //To receive a string with the end of carriage return or line feed
+    //
+    //SCI_receive_string(receivedChar);
+
+
+    //
+    //To receive a string with the end of carriage return or line feed
+    //
+    SCI_receive_frame(receivedChar);
+
 
     //
     // Clear the SCI RXFF interrupt and acknowledge the PIE interrupt.

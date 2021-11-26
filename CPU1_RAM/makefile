@@ -14,8 +14,44 @@ ORDERED_OBJS += \
 "./sci_utils.obj" \
 "./device/device.obj" \
 "./device/f28004x_codestartbranch.obj" \
+"./device/driverlib/adc.obj" \
+"./device/driverlib/asysctl.obj" \
+"./device/driverlib/can.obj" \
+"./device/driverlib/cla.obj" \
+"./device/driverlib/clapromcrc.obj" \
+"./device/driverlib/clb.obj" \
+"./device/driverlib/cmpss.obj" \
+"./device/driverlib/cputimer.obj" \
+"./device/driverlib/dac.obj" \
+"./device/driverlib/dcc.obj" \
+"./device/driverlib/dcsm.obj" \
+"./device/driverlib/dma.obj" \
+"./device/driverlib/ecap.obj" \
+"./device/driverlib/epwm.obj" \
+"./device/driverlib/eqep.obj" \
+"./device/driverlib/erad.obj" \
+"./device/driverlib/flash.obj" \
+"./device/driverlib/fsi.obj" \
+"./device/driverlib/gpio.obj" \
+"./device/driverlib/hrcap.obj" \
+"./device/driverlib/hrpwm.obj" \
+"./device/driverlib/i2c.obj" \
+"./device/driverlib/interrupt.obj" \
+"./device/driverlib/lin.obj" \
+"./device/driverlib/memcfg.obj" \
+"./device/driverlib/pga.obj" \
+"./device/driverlib/pmbus.obj" \
+"./device/driverlib/sci.obj" \
+"./device/driverlib/sdfm.obj" \
+"./device/driverlib/spi.obj" \
+"./device/driverlib/sysctl.obj" \
+"./device/driverlib/version.obj" \
+"./device/driverlib/xbar.obj" \
 "../28004x_generic_flash_lnk.cmd" \
-"D:/ti/c2000/C2000Ware_3_04_00_00/driverlib/f28004x/driverlib/ccs/Debug/driverlib.lib" \
+"../device/driverlib/ccs/Debug/driverlib.lib" \
+"../device/driverlib/ccs/Debug/driverlib_coff.lib" \
+"../device/driverlib/ccs/Release/driverlib.lib" \
+"../device/driverlib/ccs/Release/driverlib_coff.lib" \
 $(GEN_CMDS__FLAG) \
 -llibc.a \
 
@@ -28,8 +64,14 @@ RMDIR := RMDIR /S/Q
 -include sources.mk
 -include subdir_vars.mk
 -include device/subdir_vars.mk
+-include device/driverlib/subdir_vars.mk
+-include device/driverlib/ccs/Debug/subdir_vars.mk
+-include device/driverlib/ccs/Release/subdir_vars.mk
 -include subdir_rules.mk
 -include device/subdir_rules.mk
+-include device/driverlib/subdir_rules.mk
+-include device/driverlib/ccs/Debug/subdir_rules.mk
+-include device/driverlib/ccs/Release/subdir_rules.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
@@ -160,8 +202,9 @@ sci_ex3_interrupts_fifo.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "sci_ex3_interrupts_fifo.obj" "sci_utils.obj" "device\device.obj" "device\f28004x_codestartbranch.obj" 
-	-$(RM) "sci_ex3_interrupts_fifo.d" "sci_utils.d" "device\device.d" 
+	-$(RM) "sci_ex3_interrupts_fifo.obj" "sci_utils.obj" "device\device.obj" "device\f28004x_codestartbranch.obj" "device\driverlib\adc.obj" "device\driverlib\asysctl.obj" "device\driverlib\can.obj" "device\driverlib\cla.obj" "device\driverlib\clapromcrc.obj" "device\driverlib\clb.obj" "device\driverlib\cmpss.obj" "device\driverlib\cputimer.obj" "device\driverlib\dac.obj" "device\driverlib\dcc.obj" "device\driverlib\dcsm.obj" "device\driverlib\dma.obj" "device\driverlib\ecap.obj" "device\driverlib\epwm.obj" "device\driverlib\eqep.obj" "device\driverlib\erad.obj" "device\driverlib\flash.obj" "device\driverlib\fsi.obj" "device\driverlib\gpio.obj" "device\driverlib\hrcap.obj" "device\driverlib\hrpwm.obj" "device\driverlib\i2c.obj" "device\driverlib\interrupt.obj" "device\driverlib\lin.obj" "device\driverlib\memcfg.obj" "device\driverlib\pga.obj" "device\driverlib\pmbus.obj" "device\driverlib\sci.obj" "device\driverlib\sdfm.obj" "device\driverlib\spi.obj" "device\driverlib\sysctl.obj" "device\driverlib\version.obj" 
+	-$(RM) "device\driverlib\xbar.obj" 
+	-$(RM) "sci_ex3_interrupts_fifo.d" "sci_utils.d" "device\device.d" "device\driverlib\adc.d" "device\driverlib\asysctl.d" "device\driverlib\can.d" "device\driverlib\cla.d" "device\driverlib\clapromcrc.d" "device\driverlib\clb.d" "device\driverlib\cmpss.d" "device\driverlib\cputimer.d" "device\driverlib\dac.d" "device\driverlib\dcc.d" "device\driverlib\dcsm.d" "device\driverlib\dma.d" "device\driverlib\ecap.d" "device\driverlib\epwm.d" "device\driverlib\eqep.d" "device\driverlib\erad.d" "device\driverlib\flash.d" "device\driverlib\fsi.d" "device\driverlib\gpio.d" "device\driverlib\hrcap.d" "device\driverlib\hrpwm.d" "device\driverlib\i2c.d" "device\driverlib\interrupt.d" "device\driverlib\lin.d" "device\driverlib\memcfg.d" "device\driverlib\pga.d" "device\driverlib\pmbus.d" "device\driverlib\sci.d" "device\driverlib\sdfm.d" "device\driverlib\spi.d" "device\driverlib\sysctl.d" "device\driverlib\version.d" "device\driverlib\xbar.d" 
 	-$(RM) "device\f28004x_codestartbranch.d" 
 	-@echo 'Finished clean'
 	-@echo ' '

@@ -8,9 +8,6 @@ SHELL = cmd.exe
 CMD_SRCS += \
 ../28004x_generic_flash_lnk.cmd 
 
-LIB_SRCS += \
-D:/ti/c2000/C2000Ware_3_04_00_00/driverlib/f28004x/driverlib/ccs/Debug/driverlib.lib 
-
 C_SRCS += \
 ../sci_ex3_interrupts_fifo.c \
 ../sci_utils.c 
